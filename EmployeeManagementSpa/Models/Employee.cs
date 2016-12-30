@@ -9,6 +9,7 @@ namespace EmployeeManagementSpa.Models
     {
         public const int MaxNameLength = 256;
 
+
         [Key]
         public int Id { get; set; }
 
