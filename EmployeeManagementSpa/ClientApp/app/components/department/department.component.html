@@ -1,15 +1,55 @@
-﻿<div class="department">
-    <div class="panel panel-primary">
-        <div class="panel-heading">Create a Department</div>
-        <div class="panel-body">
-            <div class="row">
-                <div class="col-xs-2">
-                    <label class="">Name :</label>
+﻿<form novalidate #f="ngForm">
+    <div class="margin-top-30">
+        <div class="panel panel-primary">
+            <div class="panel-heading">Create a Department</div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="form-group">
+                        <div class="col-xs-3 margin-top-10 margin-left-30">
+                            <label for="department-name">Department Name :</label>
+                        </div>
+                        <div class="col-xs-4 margin-left-minus-50">
+                            <input class="form-control" id="department-name" type="text"
+                                   name="name"
+                                   [ngModel]="department.name"
+                                   #departmentName="ngModel"
+                                   mixlength="256"
+                                   (input)="null"
+                                   #depName
+                                   required>
+                        </div>
+                        <div [hidden]="departmentName.valid || departmentName.pristine"
+                             class="height-35 alert alert-danger">
+                        </div>
+                    </div>
                 </div>
-                <div class="col-xs-4">
-                    <input class="" type="text" name="Name" required maxlength="256">
+                <div class="row save-bttn">
+                    <button class="btn btn-primary" [disabled]="!f.form.valid" *ngIf="!isEdit" (click)="onAddDepartment(f);f.reset()">Save</button>
+                    <button class="btn btn-primary" [disabled]="!f.form.valid" *ngIf="isEdit" (click)="onUpdateDepartment(f);f.reset()">Update</button>
                 </div>
             </div>
         </div>
+    </div>
+</form>
+
+<div class="panel panel-primary">
+    <div class="panel-heading">All Departments</div>
+    <div class="panel-body">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Department Name</th>
+                    <th>Edit</th>
+                    <th>Delete</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let department of departments">
+                    <td>{{department.name}}</td>
+                    <td class="edit-col-width"><button class="btn btn-primary" (click)="onEdit(department)">Edit</button></td>
+                    <td class="delete-col-width"><button class="btn btn-danger" (click)="onDeleteDepartment(department)">Delete</button></td>
+                </tr>
+            </tbody>
+        </table>
     </div>
 </div>

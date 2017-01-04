@@ -1,10 +1,96 @@
-﻿<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf-8" />
-    <title></title>
-</head>
-<body>
+﻿<form novalidate #f="ngForm">
+    <div class="margin-top-30">
+        <div class="panel panel-primary">
+            <div class="panel-heading">Create an Employee</div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-xs-6">
+                        <div class="form-group">
+                            <div class="col-xs-5 margin-top-10 margin-left-30">
+                                <label for="employee-firstname">First Name :</label>
+                            </div>
+                            <div class="col-xs-7 margin-left-minus-50">
+                                <input class="form-control" id="employee-firstname" type="text"
+                                       name="firstName"
+                                       [ngModel]="employee.firstName"
+                                       #employeeFirstName="ngModel"
+                                       mixlength="256"
+                                       #empFirstName
+                                       required>
+                            </div>
+                            <div [hidden]="employeeFirstName.valid || employeeFirstName.pristine"
+                                 class="height-35 alert alert-danger">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-6">
+                        <div class="form-group">
+                            <div class="col-xs-5 margin-top-10 margin-left-30">
+                                <label for="employee-lastname">Last Name :</label>
+                            </div>
+                            <div class="col-xs-7 margin-left-minus-50">
+                                <input class="form-control" id="employee-lastname" type="text"
+                                       name="lastName"
+                                       [ngModel]="employee.lastName"
+                                       #employeeLastName="ngModel"
+                                       mixlength="256"
+                                       #empLastName
+                                       required>
+                            </div>
+                            <div [hidden]="employeeLastName.valid || employeeLastName.pristine"
+                                 class="height-35 alert alert-danger">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row margin-top-10">
+                    <div class="form-group col-xs-6">
+                        <div class="col-xs-4 margin-top-10 ">
+                            <label for="department">Department :</label>
+                        </div>
+                        <div class="col-xs-7 margin-left-minus-20">
+                            <select class="form-control" id="department"
+                                    required
+                                    [ngModel]="employee.departmentId"
+                                    name="departmentId"
+                                    #depId="ngModel">
+                                <option *ngFor="let d of departments" [value]="d.id">{{d.name}}</option>
+                            </select>
+                        </div>
+                        <div [hidden]="depId.valid || depId.pristine" class="height-35 alert alert-danger">
+                        </div>
+                    </div>
+                </div>
+                <div class="row save-bttn pull-right margin-right-65">
+                    <button type="submit" class="btn btn-primary" [disabled]="!f.form.valid" *ngIf="!isEdit" (click)="onAddEmployee(f); f.reset()">Save</button>
+                    <button type="submit" class="btn btn-primary" [disabled]="!f.form.valid" *ngIf="isEdit" (click)="onUpdateEmployee(f); f.reset()">Update</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
 
-</body>
-</html>
+
+<div class="panel panel-primary">
+    <div class="panel-heading">All Employees</div>
+    <div class="panel-body">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Edit</th>
+                    <th>Delete</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let employee of employees">
+                    <td>{{employee.firstName}}</td>
+                    <td>{{employee.lastName}}</td>
+                    <td class="edit-col-width"><button class="btn btn-primary" (click)="onEdit(employee)">Edit</button></td>
+                    <td class="delete-col-width"><button class="btn btn-danger" (click)="onDeleteEmployee(employee)">Delete</button></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

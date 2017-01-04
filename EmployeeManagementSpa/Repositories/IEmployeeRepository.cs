@@ -1,14 +1,15 @@
 ﻿using System.Collections.Generic;
+using EmployeeManagementSpa.Dtos;
 using EmployeeManagementSpa.Models;
 
 namespace EmployeeManagementSpa.Repositories
 {
     public interface IEmployeeRepository
     {
-        void Create(Employee employee);
+        Employee Create(Employee employee);
         IEnumerable<Employee> GetAll();
-        void Delete(int id);
-        void Update(Employee employee);
+        EmployeeDto Delete(int id);
+        Employee Update(int id, Employee employee);
 
     }
 }

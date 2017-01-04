@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using EmployeeManagementSpa.Dtos;
 using EmployeeManagementSpa.Models;
 using EmployeeManagementSpa.Repositories;
 using Microsoft.AspNetCore.Mvc;
@@ -15,30 +16,30 @@ namespace EmployeeManagementSpa.Controllers
             _employeeRepository = employeeRepository;
         }
 
-        [HttpGet]
+        [HttpGet("[action]")]
         public IEnumerable<Employee> GetAll()
         {
             return _employeeRepository.GetAll();
         }
 
-        [HttpPost]
-        public void Create([FromBody]Employee department)
+        [HttpPost("[action]")]
+        public Employee Create([FromBody]Employee employee)
         {
-            _employeeRepository.Create(department);
+            return _employeeRepository.Create(employee);
         }
 
         // PUT api/values/5
-        [HttpPut("{id}")]
-        public void Update(int id, [FromBody]Employee department)
+        [HttpPut, Route("Update/{id}")]
+        public Employee Update(int id, [FromBody]Employee employee)
         {
-            _employeeRepository.Update(department);
+            return _employeeRepository.Update(id,employee);
         }
 
         // DELETE api/values/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
+        [HttpDelete, Route("Delete/{id}")]
+        public EmployeeDto Delete(int id)
         {
-            _employeeRepository.Delete(id);
+            return _employeeRepository.Delete(id);
         }
     }
 }

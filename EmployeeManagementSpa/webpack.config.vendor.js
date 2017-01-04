@@ -32,6 +32,8 @@ module.exports = {
             'es6-promise',
             'jquery',
             'zone.js',
+            'ng2-bootstrap',
+            'ng2-select'
         ]
     },
     output: {
