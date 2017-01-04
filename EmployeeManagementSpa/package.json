@@ -40,6 +40,7 @@
     "webpack-merge": "^0.14.1",
     "zone.js": "^0.6.21",
     "ng2-bootstrap": "1.1.16-11",
-    "ng2-select": "1.1.2" 
+    "ng2-select": "1.1.2",
+    "webpack-node-externals": "1.5.4" 
   }
 }
