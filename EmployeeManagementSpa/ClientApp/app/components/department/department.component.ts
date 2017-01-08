@@ -6,10 +6,7 @@ import { DepartmentService } from './department.service';
     selector: 'department',
     template: require('./department.component.html'),
     providers: [DepartmentService],
-    styles: ['.margin-top-30 { margin-top: 30px; }', '.save-bttn {margin-top: 30px; margin-left: 280px;}',
-        'table {width: 700px;}', 'tr:nth-child(even) {background-color: #f2f2f2 }', '.edit-col-width {width:80px}',
-        '.delete-col-width {width:90px}', '.margin-top-10 { margin-top: 10px; }', '.margin-left-30 {margin-left : 30px}', '.margin-left-minus-50 {margin-left : -50px}',
-        '.height-35 {height:35px}']
+    styles: [require('./department.component.css')]
 })
 export class DepartmentComponent implements OnInit {
 
@@ -24,20 +21,29 @@ export class DepartmentComponent implements OnInit {
     errorMessage: string;
     departments: Department[] = [];
     isEdit: boolean = false;
+    isLoaded: boolean = false;
 
-    ngOnInit() { this.onGetAllDepartments(); }
+    ngOnInit() {
+        this.isLoaded = false;
+        this.onGetAllDepartments();
+    }
 
     //get
     onGetAllDepartments() {
         this.departmentService.onGetAllDepartments()
-            .subscribe(departments => this.departments = departments, error => this.errorMessage = <any>error);
+            .subscribe(departments => {
+                this.departments = departments;
+                this.isLoaded = true;
+            }, error => this.errorMessage = <any>error);
     }
 
     //add
     onAddDepartment({ value, valid }: { value: Department, valid: boolean }) {
+        this.isLoaded = false;
         this.departmentService.onAddDepartment(value)
             .subscribe(department => {
                 this.departments.push(department);
+                this.isLoaded = true;
             }, error => this.errorMessage = <any>error);
     }
 

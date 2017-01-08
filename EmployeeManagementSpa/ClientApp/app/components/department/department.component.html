@@ -32,6 +32,8 @@
     </div>
 </form>
 
+<div class="loader overlay margin-left-340 margin-top-100" *ngIf="!isLoaded"></div>
+
 <div class="panel panel-primary" *ngIf="departments.length">
     <div class="panel-heading">All Departments</div>
     <div class="panel-body">
@@ -52,4 +54,5 @@
             </tbody>
         </table>
     </div>
+
 </div>

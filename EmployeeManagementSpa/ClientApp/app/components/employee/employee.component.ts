@@ -8,8 +8,7 @@ import { Department } from '../department/department';
     selector: 'employee',
     template: require('./employee.component.html'),
     providers: [EmployeeService, DepartmentService],
-    styles: ['.margin-top-30 { margin-top: 30px; }', '.margin-top-10 { margin-top: 10px; }', '.margin-left-minus-50 {margin-left : -50px}',
-        '.margin-right-65 {margin-right:65px}', '.margin-left-10 {margin-left:10px}', '.margin-left-minus-20 {margin-left:-20px}', '.height-35 {height:35px}']
+    styles: [require('./employee.component.css')]
 
 })
 
@@ -29,8 +28,10 @@ export class EmployeeComponent implements OnInit {
     employees: Employee[] = [];
     isEdit: boolean = false;
     departments: Department[] = [];
+    isLoaded: boolean = false;
 
     ngOnInit() {
+        this.isLoaded = false;
         this.onGetAllEmployees();
         this.onGetAllDepartments();
     }
@@ -38,14 +39,19 @@ export class EmployeeComponent implements OnInit {
     //get
     onGetAllEmployees() {
         this.employeeService.onGetAllEmployees()
-            .subscribe(employees => this.employees = employees, error => this.errorMessage = <any>error);
+            .subscribe(employees => {
+                this.employees = employees;
+                this.isLoaded = true;
+            }, error => this.errorMessage = <any>error);
     }
 
     //add
     onAddEmployee({ value, valid }: { value: Employee, valid: boolean }) {
+        this.isLoaded = false;
         this.employeeService.onAddEmployee(value)
             .subscribe(employee => {
                 this.employees.push(employee);
+                this.isLoaded = true;
             }, error => this.errorMessage = <any>error);
     }
 
